@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Security.Cryptography; // Потрібно для роботи з шифруванням
+using System.Security.Cryptography; 
 using System.Text;
 
 namespace studetDiary

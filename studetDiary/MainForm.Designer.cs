@@ -28,19 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
+            buttonAddAssignment = new Button();
             label1 = new Label();
+            listBoxAssignments = new ListBox();
+            buttonDelete = new Button();
+            buttonEdit = new Button();
             SuspendLayout();
             // 
-            // button1
+            // buttonAddAssignment
             // 
-            button1.Font = new Font("Segoe UI", 10F);
-            button1.Location = new Point(627, 368);
-            button1.Name = "button1";
-            button1.Size = new Size(131, 44);
-            button1.TabIndex = 0;
-            button1.Text = "Додати завдання";
-            button1.UseVisualStyleBackColor = true;
+            buttonAddAssignment.Font = new Font("Segoe UI", 10F);
+            buttonAddAssignment.Location = new Point(627, 368);
+            buttonAddAssignment.Name = "buttonAddAssignment";
+            buttonAddAssignment.Size = new Size(131, 44);
+            buttonAddAssignment.TabIndex = 0;
+            buttonAddAssignment.Text = "Додати завдання";
+            buttonAddAssignment.UseVisualStyleBackColor = true;
+            buttonAddAssignment.Click += buttonAddAssignment_Click;
             // 
             // label1
             // 
@@ -48,17 +52,49 @@
             label1.Font = new Font("Segoe UI", 14F);
             label1.Location = new Point(302, 24);
             label1.Name = "label1";
-            label1.Size = new Size(187, 25);
+            label1.Size = new Size(184, 25);
             label1.TabIndex = 1;
             label1.Text = "Щоденник студента";
+            // 
+            // listBoxAssignments
+            // 
+            listBoxAssignments.FormattingEnabled = true;
+            listBoxAssignments.ItemHeight = 15;
+            listBoxAssignments.Location = new Point(26, 75);
+            listBoxAssignments.Name = "listBoxAssignments";
+            listBoxAssignments.Size = new Size(551, 289);
+            listBoxAssignments.TabIndex = 2;
+            // 
+            // buttonDelete
+            // 
+            buttonDelete.Location = new Point(26, 380);
+            buttonDelete.Name = "buttonDelete";
+            buttonDelete.Size = new Size(75, 23);
+            buttonDelete.TabIndex = 3;
+            buttonDelete.Text = "видалити";
+            buttonDelete.UseVisualStyleBackColor = true;
+            buttonDelete.Click += buttonDelete_Click;
+            // 
+            // buttonEdit
+            // 
+            buttonEdit.Location = new Point(134, 380);
+            buttonEdit.Name = "buttonEdit";
+            buttonEdit.Size = new Size(75, 23);
+            buttonEdit.TabIndex = 4;
+            buttonEdit.Text = "редагувати";
+            buttonEdit.UseVisualStyleBackColor = true;
+            buttonEdit.Click += buttonEdit_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(buttonEdit);
+            Controls.Add(buttonDelete);
+            Controls.Add(listBoxAssignments);
             Controls.Add(label1);
-            Controls.Add(button1);
+            Controls.Add(buttonAddAssignment);
             Name = "MainForm";
             Text = "Щоденник студента";
             ResumeLayout(false);
@@ -67,7 +103,10 @@
 
         #endregion
 
-        private Button button1;
+        private Button buttonAddAssignment;
         private Label label1;
+        private ListBox listBoxAssignments;
+        private Button buttonDelete;
+        private Button buttonEdit;
     }
 }
