@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Windows.Forms;
 
 namespace studetDiary
@@ -22,14 +23,39 @@ namespace studetDiary
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBoxTitle.Text) ||
-                string.IsNullOrWhiteSpace(textBoxDescription.Text) ||
-                string.IsNullOrWhiteSpace(textBoxSubject.Text))
+            
+            if (string.IsNullOrWhiteSpace(textBoxTitle.Text))
             {
-                MessageBox.Show("Будь ласка, заповніть усі поля.");
+                MessageBox.Show("Введіть назву завдання");
                 return;
             }
 
+            if (textBoxTitle.Text.Length < 3)
+            {
+                MessageBox.Show("Назва повинна містити мінімум 3 символи");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxDescription.Text))
+            {
+                MessageBox.Show("Введіть опис");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxSubject.Text))
+            {
+                MessageBox.Show("Введіть предмет");
+                return;
+            }
+
+            
+            if (dateTimePickerDeadline.Value < DateTime.Now)
+            {
+                MessageBox.Show("Дедлайн не може бути в минулому");
+                return;
+            }
+
+            
             Subject subject = new Subject(assignmentId, textBoxSubject.Text);
 
             CreatedAssignment = new Assignment(
@@ -40,7 +66,15 @@ namespace studetDiary
                 dateTimePickerDeadline.Value,
                 (AssignmentStatus)comboBoxStatus.SelectedItem
             );
+            var context = new ValidationContext(CreatedAssignment);
+            var results = new List<ValidationResult>();
 
+            if (!Validator.TryValidateObject(CreatedAssignment, context, results, true))
+            {
+                string errors = string.Join("\n", results.Select(r => r.ErrorMessage));
+                MessageBox.Show(errors);
+                return;
+            }
             DialogResult = DialogResult.OK;
             Close();
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace studetDiary
 {
@@ -11,7 +12,18 @@ namespace studetDiary
         public MainForm()
         {
             InitializeComponent();
+
+            repo.LoadFromFile("data.json");
+            RefreshAssignments();
+            var list = repo.GetAll();
+            if (list.Count > 0)
+            {
+                nextId = list.Max(a => a.Id) + 1;
+            }
+
+            RefreshAssignments();
         }
+        
 
         private void RefreshAssignments()
         {
@@ -32,6 +44,7 @@ namespace studetDiary
                 repo.Add(form.CreatedAssignment);
                 nextId++;
                 RefreshAssignments();
+                repo.SaveToFile("data.json");
             }
         }
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -43,6 +56,7 @@ namespace studetDiary
             }
 
             repo.Remove(listBoxAssignments.SelectedIndex + 1);
+            repo.SaveToFile("data.json");
 
             RefreshAssignments();
         }
@@ -64,6 +78,7 @@ namespace studetDiary
             {
                 repo.Remove(assignment.Id);
                 repo.Add(form.CreatedAssignment);
+                repo.SaveToFile("data.json");
 
                 RefreshAssignments();
             }

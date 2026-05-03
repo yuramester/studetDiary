@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Text.Json;
 
 namespace studetDiary
 {
@@ -32,7 +34,7 @@ namespace studetDiary
             return assignments;
         }
 
-        public Assignment GetById(int id)
+        public Assignment GetById(int id) 
         {
             return assignments.FirstOrDefault(x => x.Id == id);
         }
@@ -43,6 +45,19 @@ namespace studetDiary
             return assignments
                 .Where(a => a.Title.Contains(query))
                 .ToList();
+        }
+        public void SaveToFile(string path)
+        {
+            string json = JsonSerializer.Serialize(assignments);
+            File.WriteAllText(path, json);
+        }
+        public void LoadFromFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                string json = File.ReadAllText(path);
+                assignments = JsonSerializer.Deserialize<List<Assignment>>(json);
+            }
         }
     }
 }
